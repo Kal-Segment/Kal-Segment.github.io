@@ -1,0 +1,125 @@
+
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>Home Questionnaire</title> 
+    
+    <!--Placeholder for Segment Snippet --> 
+    <script>
+      !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="XifGFqhG4irvgjfWjbLbcUX3ovm4KSCo";analytics.SNIPPET_VERSION="4.13.2";
+      analytics.load("XifGFqhG4irvgjfWjbLbcUX3ovm4KSCo");
+      analytics.page();
+      }}();
+    </script>
+</head> 
+
+<body>
+
+    <script>
+            //just adding a constructor to the String object
+            // will be using it to create a userID from email
+            String.prototype.hashCode = function() {
+                var hash = 0;
+                if (this.length == 0) {
+                    return hash;
+                }
+                for (var i = 0; i < this.length; i++) {
+                    var char = this.charCodeAt(i);
+                    hash = ((hash<<5)-hash)+char;
+                    hash = hash & hash; // Convert to 32bit integer
+                }
+                return hash;
+            }
+    </script>
+    
+
+<!-- form with all fields -->    
+<h1>Segment City</h1> 
+<p>A testing website to play around with Segment functions.</p>  
+
+<!-- login form & button -->
+<form name="login_form" onsubmit="login(event)">
+    User ID: <input name="userId" required="" size="20" type="text"/>
+    <input name="submit" type="submit" value="Login">
+    <br><br>
+</form>
+
+<script type="text/javascript">
+    function login(e) {
+        var form = e.target;
+        var userId = form["userId"].value;
+        analytics.identify(userId)
+    }
+</script>
+
+<form name="travel" onsubmit="identify(event)">
+     What is your favorite travel destination?
+    <input name="destination" required="" size="81" type="text" value="Bergamo"/> 
+    <br><br><br> 
+    Any recommendations (cool things to do, places to visit or restaurants to eat)? 
+    <br><br> 
+    <textarea cols="81" name="details" required="" rows="10">check out the fantastic food</textarea> 
+    <br><br> 
+    Name: <input name="fullname" required="" size="75" type="text" value="Johnny Cash"/> 
+    <br><br> 
+    Email: <input name="email" required="" size="75" type="email" value="johnny@cash.io"/> 
+    <br><br>
+    
+    Segment userId: <input name="userId" required="" size="75" type="text" value="jc1000000"/> 
+    <br><br>
+    
+    <input name="submit" type="submit" value="submit"/>
+</form> 
+
+
+    <!--Placeholder for identify and track script -->
+    <script type="text/javascript">
+      function identify(e) {
+        e.preventDefault();
+        var form = e.target;
+        var email = form["email"].value;
+        var fullname = form["fullname"].value;
+        var destination = form["destination"].value;
+        var details = form["details"].value;
+        var user = {
+            email: email, 
+            name: fullname, 
+            destination: destination, 
+            details: details
+        };
+        var myUserId = form["userId"].value;
+          
+        // call identify event first  
+        analytics.identify(myUserId, {
+            email: email, 
+            name: fullname
+        });
+          
+        // call track event  
+        analytics.track('Form Submitted', 
+            {
+                label: 'client side',
+                user
+                });
+          
+        analytics.alias(myUserId);
+      }
+    </script>
+    
+    <div id="target-container"></div>
+    
+    <br/><br/>
+    
+    
+    <!-- button to reset a.js -->
+    <button type="button" onclick="analytics.reset();">analytics.reset();</button>
+
+    <!-- extra button for testing purposes -->
+    <button type="button" onclick="analytics.track('test button clicked');">Test Button</button>
+
+    <!-- link to a second page to test referrer -->
+    <a href="https://stesegment.github.io/sample.html">Link to a second page</a>
+    
+    
+</body> 
+</html>
