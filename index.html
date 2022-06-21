@@ -28,7 +28,10 @@
                     b = document.body,
                     st = 'scrollTop',
                     sh = 'scrollHeight';
-                console.log((h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100);                 
+                var scrollDepth = ((h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100);
+                if (scrollDepth > 24) && (scrollDepth < 26) {
+                    console.log("Scrolled 25%");
+                };                 
             };
         };
     </script>
