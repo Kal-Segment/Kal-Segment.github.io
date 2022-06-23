@@ -29,9 +29,14 @@
                     st = 'scrollTop',
                     sh = 'scrollHeight';
                 var scrollDepth = ((h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100);
-                console.log(scrollDepth);
                 if (scrollDepth > 24 && scrollDepth < 26) {
-                    console.log("Scrolled 25%");
+                    analytics.track("Scrolled 25%");
+                } else if (scrollDepth > 49 && scrollDepth < 51) {
+                    analytics.track("Scrolled 50%");
+                } else if (scrollDepth > 74 && scrollDepth < 76) {
+                    analytics.track("Scrolled 75%");
+                } else if (scrollDepth > 95) {
+                    analytics.track("Scrolled 100%");
                 };                 
             };
         };
