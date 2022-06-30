@@ -32,13 +32,13 @@
                     sh = 'scrollHeight';
                 var scrollDepth = ((h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100);
                 if (lastRun >= (Date.now() - delay)) {
-                    if (scrollDepth > 24 && scrollDepth < 26) {
+                    if (scrollDepth == 25) {
                         analytics.track("Scrolled 25%");
-                    } else if (scrollDepth > 49 && scrollDepth < 51) {
+                    } else if (scrollDepth == 50) {
                         analytics.track("Scrolled 50%");
-                    } else if (scrollDepth > 74 && scrollDepth < 76) {
+                    } else if (scrollDepth == 75) {
                         analytics.track("Scrolled 75%");
-                    } else if (scrollDepth > 95) {
+                    } else if (scrollDepth == 100) {
                         analytics.track("Scrolled 100%");
                     };
                 }
