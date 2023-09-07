@@ -65,12 +65,14 @@
           }
         }
 
-        window.addEventListener('gtm:loaded', function (event) {
+        /*window.addEventListener('gtm:loaded', function (event) {
           // give the necessary tag a chance to run
           setTimeout(function () {
             await window.analytics.register(new test_plugin())
           }, 500)
-        })
+        })*/
+        await window.analytics.register(new test_plugin())
+        
     </script>
     
     
