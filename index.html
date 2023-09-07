@@ -65,13 +65,17 @@
           }
         }
 
-        /*window.addEventListener('gtm:loaded', function (event) {
-          // give the necessary tag a chance to run
-          setTimeout(function () {
-            await window.analytics.register(new test_plugin())
-          }, 500)
-        })*/
-        await window.analytics.register(new test_plugin())
+        function registerSegmentPlugin(callback) {
+              window.analytics.ready(function () {
+                // Register the Segment plugin here
+                window.analytics.register(new test_plugin());
+            
+                // Call the callback function to signal that registration is complete
+                if (typeof callback === 'function') {
+                  callback();
+                }
+              });
+            }
         
     </script>
     
