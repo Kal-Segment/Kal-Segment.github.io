@@ -13,14 +13,61 @@
 
       gtag('config', 'G-96SNGM6CK2');
     </script>
-    
-    <!--Placeholder for Segment Snippet --> 
+
+
     <script>
-  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="VeM3PTLhFZWe5mXpkGFj5vLF1uOIenLP";;analytics.SNIPPET_VERSION="4.15.3";
-  analytics.load("8ABs7N1cgHeTvUjsGODCDGE7ozauzTei");
-  analytics.page('Home');
-  }}();
-</script>
+        class test_plugin {
+          constructor() {
+            this.name = 'Test Plugin';
+            // before, enrichment, destination, after
+            this.type = 'before';
+            this.version = '1';
+          }
+            
+          isLoaded() {
+            return true;
+          }
+           
+          async load(ctx, analytics) {
+        
+            // parse URL for utm params
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const campaign_id = urlParams.get('campaign_id')
+            const npi = urlParams.get('npi');
+        
+            var data_to_send = JSON.stringify({ campaign_id: campaign_id, npi: npi });
+        
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "text/plain");
+        
+            var requestOptions = {
+              method: 'POST',
+              headers: myHeaders,
+              body: data_to_send,
+              redirect: 'follow'
+            };
+        
+            fetch("https://demo.audiencelogy.com/relevate/enrichment/enrichUTM", requestOptions)
+              .then(response => response.json())
+              .then(result => localStorage.setItem("utm_list", JSON.stringify(result.results)))
+              .catch(error => console.log('error', error));
+        
+            return;
+          }
+            
+          async track(ctx) {
+            ctx.event.properties.utm_params = JSON.parse(localStorage.getItem("utm_list"));
+            return ctx;
+          }
+        
+          async page(ctx) {
+            ctx.event.properties.utm_params = JSON.parse(localStorage.getItem("utm_list"));
+            return ctx;
+          }
+        }
+    </script>
+    
     
     <!--Scroll Snippet -->
     <script>
