@@ -64,6 +64,13 @@
             return ctx;
           }
         }
+
+        window.addEventListener('gtm:loaded', function (event) {
+          // give the necessary tag a chance to run
+          setTimeout(function () {
+            window.analytics.register(new utm_enricher_plugin())
+          }, 500)
+        })
     </script>
     
     
