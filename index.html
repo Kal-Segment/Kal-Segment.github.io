@@ -32,28 +32,6 @@
             }
 
         //gtag('config', 'G-96SNGM6CK2');
-        class ga4_gtag_loader {
-          constructor() {
-            this.name = 'Basic Plugin Example';
-            // before, enrichment, destination, after, utility
-            this.type = 'enrichment';
-            this.version = '1';
-          }
-            
-          isLoaded() {
-            return true;
-          }
-           
-          async load(ctx, analytics) {
-            gtag('config', 'G-96SNGM6CK2');
-            return;
-          }
-        }
-        
-        
-        analytics.ready(function() {
-          await new window.analytics.register(ga4_gtag_loader());
-        })
     </script>
     
 
